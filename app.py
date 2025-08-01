@@ -77,7 +77,20 @@ def delete_price():
         except Exception as e:
             result = {"error": str(e)}
     return render_template('delete_price.html', result=result)
+@app.route('/slow-endpoint')
+def slow_endpoint():
+    if 'user' not in session:
+        return redirect(url_for('login'))
 
+    try:
+        response = requests.get(f"{BACKEND_API_BASE}/api/slow-endpoint")
+        result = response.json()
+    except Exception as e:
+        result = {"error": str(e)}
+git add --all
+git commit -m "new service"
+git push
+    return result
 @app.route('/logout')
 def logout():
     session.clear()
